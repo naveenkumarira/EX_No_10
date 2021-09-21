@@ -12,12 +12,12 @@ public class SecondActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
         TextView outputText = findViewById(R.id.tv_output_text);
-        //String inputMessage = getIntent().getExtras().getString(MainActivity.ARG_INPUT_MESSAGE);
-//        if(inputMessage != null) {
-//            outputText.setText(inputMessage);
-//        } else {
-//            outputText.setText("Something went wrong!");
-//        }
-//
+         Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            String inputMessage = extras.getString(MainActivity.ARG_INPUT_MESSAGE);
+            outputText.setText(inputMessage);
+        } else {
+            outputText.setText("Something went wrong!");
+        }
     }
 }

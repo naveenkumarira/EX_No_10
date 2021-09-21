@@ -3,12 +3,11 @@ package com.example.ex_no_10;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -32,9 +31,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                PendingIntent contentIntent ;
                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                intent.putExtra(ARG_INPUT_MESSAGE, messageEditText.getText().toString()); //Add the value to bundle to get the message on CTA screen
 
-                PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this, 0, intent, 0);
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
+
+                stackBuilder.addParentStack(SecondActivity.class);
+                stackBuilder.addNextIntent(intent);
+                contentIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
+
                 String channelId = getString(R.string.channel_id);
 
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), channelId)
@@ -51,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     notificationManager.createNotificationChannel(getNotificationChannel());
                 }
 
-                builder.setContentIntent(pendingIntent); //Click to Action on the notification
+                builder.setContentIntent(contentIntent); //Click to Action(CTA) on the notification
 
                 notificationManager.notify(0, builder.build());
             }
