@@ -36,13 +36,12 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(ARG_INPUT_MESSAGE, messageEditText.getText().toString()); //Add the value to bundle to get the message on CTA screen
 
                 TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
-
                 stackBuilder.addParentStack(SecondActivity.class);
                 stackBuilder.addNextIntent(intent);
+
                 contentIntent = stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
 
                 String channelId = getString(R.string.channel_id);
-
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), channelId)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setSmallIcon(R.mipmap.ic_launcher)
